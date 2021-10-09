@@ -1,0 +1,7 @@
+function OneDGaussquadrature()
+
+
+
+
+
+end
