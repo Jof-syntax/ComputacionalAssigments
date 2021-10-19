@@ -1,13 +1,24 @@
 classdef Part2 < handle
     
     properties (Access = public)
-        solution %uExact
+        displacement
+    end
+    
+    properties (Access = private)
+        g
+        L
     end
      
     methods (Access = public)
         
-        function obj = Part2()
-            obj.solution = obj.computeUExact();
+        function obj = Part2(data)
+            obj.L = data.L;
+            obj.g = data.g;
+            obj.displacement = obj.computeUExact();
+        end
+        
+        function representSolution(obj)
+             obj.computeRepresentSolution(obj.displacement);
         end
         
         function plot(obj, time)
@@ -20,8 +31,8 @@ classdef Part2 < handle
         
         function uExact = computeUExact(obj)
             syms x u(x)
-            L = 1;
-            g = 0.01;
+            L = obj.L;;
+            g = obj.g;
             rho = pi^2/L^2;
             s = g*rho^2;
             b = g*pi^2/L;
@@ -29,14 +40,13 @@ classdef Part2 < handle
             Du = diff(u,x);
             uExact = dsolve(diff(u,2) == -q, u(0)== -g, Du(1)== b);
             uExact = simplify(uExact);
-            obj.representSolution(uExact);
         end
                 
         function createPlot(obj, time)
             close all;
             figure;
             hold on;
-            uExact = obj.solution;
+            uExact = obj.displacement;
             ezplot(uExact, 0, 1);
             ylabel('u(x) [m]'); 
             xlabel('x [m]') ; 
@@ -49,7 +59,7 @@ classdef Part2 < handle
     
     methods (Access = private, Static)
         
-        function representSolution(show)
+        function computeRepresentSolution(show)
             disp('----------------------------------------------------Part 2----------------------------------------------------');
             syms x
             disp('Pretty form :');

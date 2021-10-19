@@ -8,14 +8,15 @@ classdef Part5 < handle
         uExact
         Ni
         parameters
+        g
+        L
     end
     
     methods (Access = public)
         
-        function obj = Part5(uExact)
-            obj.representSolution();
+        function obj = Part5(uExact, data)
             obj.uExact = uExact;
-            obj.createParameters()
+            obj.createParameters(data)
             obj.createNi();
             obj.computeDisplacements();
         end
@@ -65,11 +66,12 @@ classdef Part5 < handle
             obj.Ni = Ni;
         end
         
-        function createParameters(obj)
+        function createParameters(obj, data)
             syms x
-            L = 1;
-            g = -0.01;
-            obj.parameters.g = g;
+            obj.parameters.L = data.L;
+            L = obj.parameters.L;
+            obj.parameters.g = data.g;
+            g = obj.parameters.g;
             rho = pi^2/L^2;
             obj.parameters.rho = rho;
             s = g*rho^2;
@@ -93,7 +95,7 @@ classdef Part5 < handle
             r = 1;
             l = 2:length(N) ;
             dl = K(l,l)\(F(l) + K(l,r)*g);
-            u  = g - N(l)*dl;
+            u  = - g + N(l)*dl;
         end
         
         function createPlot(obj, approxSol, time)
@@ -111,15 +113,7 @@ classdef Part5 < handle
         end
         
     end
-    
-    methods (Access = private, Static)
-        
-        function representSolution()
-            disp('----------------------------------------------------Part 5----------------------------------------------------');
-        end
-        
-    end
-    
+   
 end
 
 

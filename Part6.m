@@ -2,18 +2,22 @@ classdef Part6
     
     properties (Access = public)
         displacement
+        CN
+        COOR
     end
     
     properties (Access = private)
-        CN
-        COOR
         K
         Ff
+        g
+        L
     end
     
     methods (Access = public)
         
-        function obj = Part6(Nelem)
+        function obj = Part6(Nelem, data)
+            obj.g = data.g;
+            obj.L = data.L;
             obj.CN = obj.computeCN(Nelem);
             obj.COOR = obj.computeCOOR(Nelem);
             obj.K = obj.AssemblyK();
@@ -21,10 +25,8 @@ classdef Part6
             obj.displacement = obj.solver(Nelem);
         end
         
-        function plot(obj)
-            COOR = obj.COOR;
-            Disp = obj.displacement;
-            plot(COOR, Disp);
+        function plot(obj, time)
+            obj.createPlot(time);
         end
         
     end
@@ -41,7 +43,7 @@ classdef Part6
         
         function COOR = computeCOOR(obj, Nelem)
             COOR = sparse(Nelem+1,1);
-            increase = 1/Nelem; %longitud imposed to 1
+            increase = obj.L/Nelem;
             for i=1:1:Nelem
                 COOR(i+1) = increase*i;
             end
@@ -72,8 +74,8 @@ classdef Part6
         end
         
         function Ff = AssemblyF(obj)
-            L = 1;
-            g = 0.01;
+            L = obj.L;
+            g = obj.g;
             rho = pi^2/L^2;
             b = g*pi^2/L;
             COOR = obj.COOR;
@@ -98,7 +100,6 @@ classdef Part6
         function displacement = solver(obj, Nelem)
             Ff = obj.Ff;
             K = obj.K;
-            g = 0.01;
             R = 1;
             L = 1:Nelem+1;
             L(R) = [];
@@ -106,7 +107,7 @@ classdef Part6
             KRL = K(R, L);
             KLR = K(L, R);
             KLL = K(L, L);
-            dR = -g;
+            dR = -obj.g;
             FL = Ff(L,1);
             dL = KLL\(FL-KLR*dR);
             displacement = sparse(Nelem +1);
@@ -116,12 +117,8 @@ classdef Part6
             end
         end
         
-    end
-    
-    methods (Access = private, Static)
-        
-        function AdditionalTermK = OneDGaussquadratureTermK()
-            L = 1;
+        function AdditionalTermK = OneDGaussquadratureTermK(obj)
+            L = obj.L;
             rho = pi^2/L^2;
             xiG(1) = sqrt(3/5);
             xiG(2) = -sqrt(3/5);
@@ -139,9 +136,9 @@ classdef Part6
                 int2 int3];
         end
         
-        function TermF = COMPUTE_Fe_FORCE(coordx1, coordx2)
-            L = 1;
-            g = 0.01;
+        function TermF = COMPUTE_Fe_FORCE(obj, coordx1, coordx2)
+            L = obj.L;
+            g = obj.g;
             rho = pi^2/L^2;
             s = g*rho^2;
             xiG(1) = 0.339981043584856;
@@ -159,6 +156,20 @@ classdef Part6
             int2 = w*qFun2';
             TermF = s*1/16*[int1;
                 int2];
+        end
+        
+        function createPlot(obj, time)
+            close all;
+            figure;
+            hold on;
+            COOR = obj.COOR;
+            Disp = obj.displacement;
+            plot(COOR, Disp);
+            ylabel('u(x) [m]');
+            xlabel('x [m]') ;
+            title(' ');
+            hold off;
+            pause(time)
         end
         
     end
