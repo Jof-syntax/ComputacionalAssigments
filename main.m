@@ -20,23 +20,23 @@ classdef main < handle
             obj.createNelem();
             obj.createData();
             part2 = Part2(obj.data);
-            part2.representSolution();
+            %part2.representSolution();
             part5 = Part5(part2.displacement, obj.data);
             part6 = Part6(obj.Nelem, obj.data);
             obj.createPlot(part2, part5, part6);
             %%%%%%%%%%%%%%%%%%%% Part2 %%%%%%%%%%%%%%%%%%%%
-            
+            %PART2 = AssigmentPART2(obj.data);
         end
     end
     
     methods (Access = private)
         
         function createNelem(obj)
-            obj.Nelem = 40;
+            obj.Nelem = 5;
         end
         
         function createTimeForPlot(obj)
-            obj.time = 7;
+            obj.time = 1;
         end
         
         function createData(obj)
@@ -45,11 +45,11 @@ classdef main < handle
         end
         
         function createPlot(obj, part2, part5, part6)
-            part2.plot(obj.time);
-            part5.plot1(obj.time);
-            part5.plot2(obj.time);
-            part5.plot3(obj.time);
-            part5.plot4(obj.time);
+            %part2.plot(obj.time);
+            %part5.plot1(obj.time);
+            %part5.plot2(obj.time);
+            %part5.plot3(obj.time);
+            %part5.plot4(obj.time);
             part6.plot(obj.time);
         end
         

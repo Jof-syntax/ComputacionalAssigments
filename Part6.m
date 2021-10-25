@@ -1,4 +1,4 @@
-classdef Part6
+classdef Part6 < handle
     
     properties (Access = public)
         displacement
@@ -62,7 +62,7 @@ classdef Part6
                 NODOSe = CN( e , : );
                 COOR_e = COOR(NODOSe );
                 he = COOR_e( 2 ) - COOR_e( 1 );
-                Ke = - 1/he*[ 1 -1; -1 1] + he*AdditionalTerm; %PREGUNTAR SIGNES
+                Ke = - 1/he*[ 1 -1; -1 1] + he*AdditionalTerm; 
                 for a = 1: nNodeE
                     for b = 1:nNodeE
                         A = CN(e,a);

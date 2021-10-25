@@ -22,7 +22,7 @@ classdef AssigmentPART2 < handle
     methods (Access = private)
         
         function Nelems = computeNElems(obj)
-            Nelems = [4 8 16 32 64];
+            Nelems = [4 8 16 32 64]; %last element is considered as exact
         end
         
         function displacements = computeDisplacments(obj, data)
