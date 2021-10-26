@@ -1,7 +1,7 @@
 classdef Part5 < handle
     
     properties (Access = public)
-        solution %u
+        solution %Approximated solution
     end
     
     properties (Access = private)
@@ -14,29 +14,29 @@ classdef Part5 < handle
     
     methods (Access = public)
         
-        function obj = Part5(uExact, data)
+        function obj = Part5(uExact, data) %The constructor needs the values of parameters 'g' and 'L' and the displacemnts calculated in 'Part2' to work. This function obtains the displacements by means of 'computeDisplacements'
             obj.uExact = uExact;
             obj.createParameters(data)
             obj.createNi();
             obj.computeDisplacements();
         end
         
-        function plot1(obj, time) % Polynom x
+        function plot1(obj, time) % Plots the approximated solution 'Polynom x' and the exact solution for a given time 'time'
             Sol1 = obj.solution.one;
             obj.createPlot(Sol1, time);
         end
         
-        function plot2(obj, time) % Polynom x^2
+        function plot2(obj, time) % Plots the approximated solution 'Polynom x^2' and the exact solution for a given time 'time'
             Sol2 = obj.solution.two;
             obj.createPlot(Sol2, time);
         end
         
-        function plot3(obj, time) % Polynom x^3
+        function plot3(obj, time) % Plots the approximated solution 'Polynom x^3' and the exact solution for a given time 'time'
             Sol3 = obj.solution.three;
             obj.createPlot(Sol3, time);
         end
         
-        function plot4(obj, time) % Polynom x^4
+        function plot4(obj, time) % Plots the approximated solution 'Polynom x^4' and the exact solution for a given time 'time'
             Sol4 = obj.solution.four;
             obj.createPlot(Sol4, time);
         end
@@ -45,7 +45,7 @@ classdef Part5 < handle
     
     methods (Access = private)
         
-        function computeDisplacements(obj)
+        function computeDisplacements(obj) %Computes the approximated solution for the 4 cases
             syms x
             Ni1 = obj.Ni.Ni1;
             Ni2 = obj.Ni.Ni2;
@@ -57,7 +57,7 @@ classdef Part5 < handle
             obj.solution.four = obj.computeGalerkinMethod(Ni4);
         end
         
-        function createNi(obj)
+        function createNi(obj) %Creats the 4 polynomials used to calulted the approximated solution
             syms x
             Ni.Ni1 = [1, x];
             Ni.Ni2 = [1, x, x^2];
@@ -66,7 +66,7 @@ classdef Part5 < handle
             obj.Ni = Ni;
         end
         
-        function createParameters(obj, data)
+        function createParameters(obj, data) % Creates all the parameters used to calulted the approximated solution
             syms x
             obj.parameters.L = data.L;
             L = obj.parameters.L;
@@ -80,7 +80,7 @@ classdef Part5 < handle
             obj.parameters.f = s*x^2;
         end
         
-        function [u] = computeGalerkinMethod(obj, N)
+        function [u] = computeGalerkinMethod(obj, N) %Computes the displacments using the Garlekin method (Approximated solution)
             syms x
             f = obj.parameters.f;
             b = obj.parameters.b;
@@ -98,7 +98,7 @@ classdef Part5 < handle
             u  = - g + N(l)*dl;
         end
         
-        function createPlot(obj, approxSol, time)
+        function createPlot(obj, approxSol, time) % Creates the plot and its configuration
             close all;
             figure;
             hold on;

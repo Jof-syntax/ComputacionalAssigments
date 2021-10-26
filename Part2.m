@@ -21,7 +21,7 @@ classdef Part2 < handle
              obj.computeRepresentSolution(obj.displacement);
         end
         
-        function plot(obj, time) % Creats a plot for the exact solution
+        function plot(obj, time) % Creates a plot for the exact solution
             obj.createPlot(time);
         end
         
@@ -42,7 +42,7 @@ classdef Part2 < handle
             uExact = simplify(uExact);
         end
                 
-        function createPlot(obj, time) % Computes the plot and its configuration
+        function createPlot(obj, time) % Creates the plot and its configuration
             close all;
             figure;
             hold on;

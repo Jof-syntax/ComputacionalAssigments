@@ -1,6 +1,7 @@
 %% ASSIGMENT 1 by Pau Tusell Tresserras & Jofre Geli Cerdan
 
-%NOTE: By default, each plot will appear for 7 seconds.
+%NOTE: By default, each plot will appear for 7 seconds. See function
+%'createTimeForPlot'.
 
 classdef main < handle
     
@@ -13,45 +14,50 @@ classdef main < handle
     methods (Access = public)
         
         function obj = main()
+            obj.init();
             %%%%%%%%%%%%%%%%%%%% Part1 %%%%%%%%%%%%%%%%%%%%
-            clc;
-            close all;
-            obj.createTimeForPlot();
-            obj.createNelem();
-            obj.createData();
             part2 = Part2(obj.data);
-            %part2.representSolution();
+            part2.representSolution();
             part5 = Part5(part2.displacement, obj.data);
             part6 = Part6(obj.Nelem, obj.data);
             obj.createPlot(part2, part5, part6);
             %%%%%%%%%%%%%%%%%%%% Part2 %%%%%%%%%%%%%%%%%%%%
-            %PART2 = AssigmentPART2(obj.data);
+            PART2 = AssigmentPART2(obj.data);
         end
     end
     
     methods (Access = private)
         
-        function createNelem(obj)
+        function init(obj) % Initializes all the functions needed to use this Class
+            clc;
+            close all;
+            obj.createTimeForPlot();
+            obj.createNelem();
+            obj.createData();
+        end
+        
+        function createNelem(obj) %Creates the number of elements used in 'Part6'
             obj.Nelem = 5;
         end
         
-        function createTimeForPlot(obj)
+        function createTimeForPlot(obj) %Creates the time that the plots will appear
             obj.time = 1;
         end
         
-        function createData(obj)
+        function createData(obj) %Geometric data of the problem
             obj.data.L = 1;
             obj.data.g = 0.01;
         end
         
-        function createPlot(obj, part2, part5, part6)
-            %part2.plot(obj.time);
-            %part5.plot1(obj.time);
-            %part5.plot2(obj.time);
-            %part5.plot3(obj.time);
-            %part5.plot4(obj.time);
+        function createPlot(obj, part2, part5, part6) % Generates all the plots of the first Assigment
+            part2.plot(obj.time);
+            part5.plot1(obj.time);
+            part5.plot2(obj.time);
+            part5.plot3(obj.time);
+            part5.plot4(obj.time);
             part6.plot(obj.time);
         end
         
     end
+    
 end
