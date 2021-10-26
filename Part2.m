@@ -1,7 +1,7 @@
 classdef Part2 < handle
     
     properties (Access = public)
-        displacement
+        displacement % Exact solution
     end
     
     properties (Access = private)
@@ -10,18 +10,18 @@ classdef Part2 < handle
     end
      
     methods (Access = public)
-        
-        function obj = Part2(data)
+         
+        function obj = Part2(data) %The constructor needs the values of parameters 'g' and 'L' to work. This function obtains the displacements by means of 'computeUExact'
             obj.L = data.L;
             obj.g = data.g;
             obj.displacement = obj.computeUExact();
         end
         
-        function representSolution(obj)
+        function representSolution(obj) % Represents the exact solution in the command window
              obj.computeRepresentSolution(obj.displacement);
         end
         
-        function plot(obj, time)
+        function plot(obj, time) % Creats a plot for the exact solution
             obj.createPlot(time);
         end
         
@@ -29,7 +29,7 @@ classdef Part2 < handle
     
     methods (Access = private)
         
-        function uExact = computeUExact(obj)
+        function uExact = computeUExact(obj) % Computes the exact solution using 'symbolic'
             syms x u(x)
             L = obj.L;;
             g = obj.g;
@@ -42,7 +42,7 @@ classdef Part2 < handle
             uExact = simplify(uExact);
         end
                 
-        function createPlot(obj, time)
+        function createPlot(obj, time) % Computes the plot and its configuration
             close all;
             figure;
             hold on;
@@ -59,7 +59,7 @@ classdef Part2 < handle
     
     methods (Access = private, Static)
         
-        function computeRepresentSolution(show)
+        function computeRepresentSolution(show) % Computes the representation of the exact solution
             disp('----------------------------------------------------Part 2----------------------------------------------------');
             syms x
             disp('Pretty form :');
