@@ -4,6 +4,7 @@ classdef AssigmentPART2 < handle
         displacements
         Uexact
         Nelems
+        Error
     end
     
     methods (Access = public)
@@ -11,10 +12,7 @@ classdef AssigmentPART2 < handle
         function obj = AssigmentPART2(data)
             obj.Nelems = obj.computeNElems();
             obj.displacements = obj.computeDisplacments(data);
-            Error = obj.computeError(1); %compute error for U-Ue
-            Error2 = obj.computeError(2); %compute error for U-Ue
-            Error3 = obj.computeError(3); %compute error for U-Ue
-            Error4 = obj.computeError(5); %compute error for U-Ue
+            Error = obj.computeError();
         end
         
     end
@@ -34,7 +32,17 @@ classdef AssigmentPART2 < handle
             end
         end
         
-        function Error = computeError(obj, currentNelem)
+        function Error = computeError(obj)
+            Nelems = obj.Nelems;
+            a = length(Nelems);
+            Error = zeros(a-1, 2); % Matrix of errors
+            for i = 1:1:a-1
+            Error(i, 1)  = obj.computeErrorU(i); %compute error for U-Ue
+            %Error(i, 2)  = obj.computeErrordU(i); %compute error for U-Ue
+            end
+        end
+        
+        function Error = computeErrorU(obj, currentNelem)
             Nelems = obj.Nelems;
             a = length(Nelems);
             coord_approx = obj.displacements(currentNelem).COOR;
@@ -71,6 +79,8 @@ classdef AssigmentPART2 < handle
             end
             Error = sqrt(Error);
         end
+        
+        
         
     end
     

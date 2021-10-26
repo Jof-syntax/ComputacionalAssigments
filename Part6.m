@@ -15,7 +15,7 @@ classdef Part6 < handle
     
     methods (Access = public)
         
-        function obj = Part6(Nelem, data)
+        function obj = Part6(Nelem, data)  %The constructor needs the values of parameters 'g', 'L' and the number of elements 'Nelem'  to work. This function obtains the displacements by means of 'solver'
             obj.g = data.g;
             obj.L = data.L;
             obj.CN = obj.computeCN(Nelem);
@@ -25,7 +25,7 @@ classdef Part6 < handle
             obj.displacement = obj.solver(Nelem);
         end
         
-        function plot(obj, time)
+        function plot(obj, time) % Creates a plot of the displacements obtained by function 'solver' 
             obj.createPlot(time);
         end
         
@@ -33,7 +33,7 @@ classdef Part6 < handle
     
     methods (Access = private)
         
-        function CN = computeCN(obj, Nelem)
+        function CN = computeCN(obj, Nelem) %Computes the realation between nodes for a given number of elements 'Nelem'. 
             CN = sparse(Nelem, 2);
             for i = 1:1:Nelem
                 CN(i, 1) = i;
@@ -41,7 +41,7 @@ classdef Part6 < handle
             end
         end
         
-        function COOR = computeCOOR(obj, Nelem)
+        function COOR = computeCOOR(obj, Nelem) % Computes the coordinates of the elements for a given number of elements 'Nelem'
             COOR = sparse(Nelem+1,1);
             increase = obj.L/Nelem;
             for i=1:1:Nelem
@@ -50,7 +50,7 @@ classdef Part6 < handle
         end
         
         
-        function K = AssemblyK(obj)
+        function K = AssemblyK(obj) %Assembles the matrix K
             COOR = obj.COOR;
             CN = obj.CN;
             nElem = size(CN, 1 );
@@ -73,7 +73,7 @@ classdef Part6 < handle
             end
         end
         
-        function Ff = AssemblyF(obj)
+        function Ff = AssemblyF(obj)  %Assembles the column vector F
             L = obj.L;
             g = obj.g;
             rho = pi^2/L^2;
@@ -97,7 +97,7 @@ classdef Part6 < handle
             Ff(nNode, 1) = Ff(nNode, 1) - b;
         end
         
-        function displacement = solver(obj, Nelem)
+        function displacement = solver(obj, Nelem) %Solves the displacements of each node, using the matrices F and K
             Ff = obj.Ff;
             K = obj.K;
             R = 1;
@@ -107,9 +107,9 @@ classdef Part6 < handle
             KRL = K(R, L);
             KLR = K(L, R);
             KLL = K(L, L);
-            dR = -obj.g;
+            dR = -obj.g; %Displacement of the first node (Known)
             FL = Ff(L,1);
-            dL = KLL\(FL-KLR*dR);
+            dL = KLL\(FL-KLR*dR); % Solution for the displacements of the other nodes
             displacement = sparse(Nelem +1);
             displacement(1) = dR;
             for i = 1:1:Nelem
@@ -158,7 +158,7 @@ classdef Part6 < handle
                 int2];
         end
         
-        function createPlot(obj, time)
+        function createPlot(obj, time) % Creates the plot and its configuration
             close all;
             figure;
             hold on;
