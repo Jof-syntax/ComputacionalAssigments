@@ -25,8 +25,8 @@ classdef Part6 < handle
             obj.displacement = obj.solver(Nelem);
         end
         
-        function plot(obj, time) % Creates a plot of the displacements obtained by function 'solver' 
-            obj.createPlot(time);
+        function plot(obj, time, uExact) % Creates a plot of the displacements obtained by function 'solver' 
+            obj.createPlot(time, uExact);
         end
         
     end
@@ -158,13 +158,14 @@ classdef Part6 < handle
                 int2];
         end
         
-        function createPlot(obj, time) % Creates the plot and its configuration
+        function createPlot(obj, time, uExact) % Creates the plot and its configuration
             close all;
             figure;
-            hold on;
             COOR = obj.COOR;
             Disp = obj.displacement;
-            plot(COOR, Disp);
+            plot(COOR, Disp, 'b--o');
+            hold on;
+            fplot(uExact, [0 obj.L]);
             ylabel('u(x) [m]');
             xlabel('x [m]') ;
             title(' ');
