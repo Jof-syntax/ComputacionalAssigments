@@ -57,7 +57,7 @@ classdef Part5 < handle
             obj.solution.four = obj.computeGalerkinMethod(Ni4);
         end
         
-        function createNi(obj) %Creats the 4 polynomials used to calulted the approximated solution
+        function createNi(obj) %Creats the 4 polynomials used to calulate the approximated solution
             syms x
             Ni.Ni1 = [1, x];
             Ni.Ni2 = [1, x, x^2];
@@ -66,7 +66,7 @@ classdef Part5 < handle
             obj.Ni = Ni;
         end
         
-        function createParameters(obj, data) % Creates all the parameters used to calulted the approximated solution
+        function createParameters(obj, data) % Creates all the parameters used to calulate the approximated solution
             syms x
             obj.parameters.L = data.L;
             L = obj.parameters.L;
@@ -80,7 +80,7 @@ classdef Part5 < handle
             obj.parameters.f = s*x^2;
         end
         
-        function [u] = computeGalerkinMethod(obj, N) %Computes the displacments using the Garlekin method (Approximated solution)
+        function [u] = computeGalerkinMethod(obj, N) %Computes the displacments using the Garlekin method (Approximated solution) for a given polynomial
             syms x
             f = obj.parameters.f;
             b = obj.parameters.b;

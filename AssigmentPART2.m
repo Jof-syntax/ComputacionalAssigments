@@ -10,7 +10,7 @@ classdef AssigmentPART2 < handle
     methods (Access = public)
         
         function obj = AssigmentPART2(data) % This constructor requires the same data as class Part6.
-            obj.nElems = obj.computenElems();
+            obj.nElems = obj.computeNElems();
             obj.displacements = obj.computeDisplacments(data);
             obj.error = obj.computeError();
         end
@@ -112,7 +112,7 @@ classdef AssigmentPART2 < handle
     
     methods (Access = private, Static)
         
-        function nElems = computenElems() % computes the number of elements that will be used
+        function nElems = computeNElems() % computes the number of elements that will be used
             nElems = [8 16 32 64 128 256 512 32768]; %last element is considered as exact solution
         end
         
