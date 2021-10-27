@@ -2,7 +2,6 @@ classdef Part6 < handle
     
     properties (Access = public)
         displacement
-        CN
         COOR
     end
     
@@ -10,6 +9,7 @@ classdef Part6 < handle
         K
         Ff
         g
+        CN
         L
     end
     
@@ -44,7 +44,7 @@ classdef Part6 < handle
         function COOR = computeCOOR(obj, Nelem) % Computes the coordinates of the elements for a given number of elements 'Nelem'
             COOR = sparse(Nelem+1,1);
             increase = obj.L/Nelem;
-            for i=1:1:Nelem
+            for i = 1:1:Nelem
                 COOR(i+1) = increase*i;
             end
         end
@@ -57,14 +57,14 @@ classdef Part6 < handle
             nNode = size(COOR, 1 );
             nNodeE = size(CN, 2 );
             K = sparse( nNode , nNode);
-            AdditionalTerm = obj.OneDGaussquadratureTermK();
-            for e =1: nElem
+            AdditionalTerm = obj.OneDGaussquadratureTermK(); 
+            for e = 1:1:nElem
                 NODOSe = CN( e , : );
                 COOR_e = COOR(NODOSe );
                 he = COOR_e( 2 ) - COOR_e( 1 );
-                Ke = - 1/he*[ 1 -1; -1 1] + he*AdditionalTerm; 
-                for a = 1: nNodeE
-                    for b = 1:nNodeE
+                Ke = - 1/he*[ 1 -1; -1 1] + he*AdditionalTerm; %See demostration of this equation in the report
+                for a = 1:1:nNodeE
+                    for b = 1:1:nNodeE
                         A = CN(e,a);
                         B = CN(e,b);
                         K(A,B) = K(A,B) + Ke(a,b);
@@ -73,7 +73,7 @@ classdef Part6 < handle
             end
         end
         
-        function Ff = AssemblyF(obj)  %Assembles the column vector F
+        function Ff = AssemblyF(obj)  % Assembles the column vector F
             L = obj.L;
             g = obj.g;
             rho = pi^2/L^2;
@@ -83,18 +83,18 @@ classdef Part6 < handle
             nElem = size(CN, 1 );
             nNode = size(COOR, 1 );
             nNodeE = size(CN, 2 );
-            Ff =zeros( nNode , 1);
-            for e =1: nElem
+            Ff = zeros( nNode , 1);
+            for e = 1:1:nElem
                 NODOSe = CN( e , : );
                 COOR_e = COOR(NODOSe );
                 he = COOR_e( 2 ) - COOR_e( 1 );
-                Fe = he*obj.COMPUTE_Fe_FORCE(COOR_e( 1 ), COOR_e( 2 ));
-                for a = 1:nNodeE
+                Fe = he*obj.COMPUTE_Fe_FORCE(COOR_e( 1 ), COOR_e( 2 )); %See demostration of this equation in the report
+                for a = 1:1:nNodeE
                     A = CN(e, a);
                     Ff(A) = Ff(A) + Fe(a);
                 end
             end
-            Ff(nNode, 1) = Ff(nNode, 1) - b;
+            Ff(nNode, 1) = Ff(nNode, 1) - b; % Last term requires term b, see demostration of this equation in the report
         end
         
         function displacement = solver(obj, Nelem) %Solves the displacements of each node, using the matrices F and K
@@ -117,8 +117,8 @@ classdef Part6 < handle
             end
         end
         
-        function AdditionalTermK = OneDGaussquadratureTermK(obj)
-            L = obj.L;
+        function AdditionalTermK = OneDGaussquadratureTermK(obj) %computes one of the K terms
+            L = obj.L; 
             rho = pi^2/L^2;
             xiG(1) = sqrt(3/5);
             xiG(2) = -sqrt(3/5);
@@ -126,17 +126,17 @@ classdef Part6 < handle
             w(1) = 5/9;
             w(2) = 5/9;
             w(3) = 8/9;
-            qFun1 = (1-xiG).^2;
+            qFun1 = (1-xiG).^2; %See demostration of this equation in the report
             int1 = w*qFun1';
-            qFun2 = (1-xiG.^2);
+            qFun2 = (1-xiG.^2); %See demostration of this equation in the report
             int2 = w*qFun2';
-            qFun3 = (1+xiG).^2;
+            qFun3 = (1+xiG).^2; %See demostration of this equation in the report
             int3 = w*qFun3';
-            AdditionalTermK = rho*1/8*[ int1 int2 ;
+            AdditionalTermK = rho*1/8*[ int1 int2 ; %See demostration of this equation in the report
                 int2 int3];
         end
         
-        function TermF = COMPUTE_Fe_FORCE(obj, coordx1, coordx2)
+        function TermF = COMPUTE_Fe_FORCE(obj, coordx1, coordx2) %computes the Force term using two given coordinates
             L = obj.L;
             g = obj.g;
             rho = pi^2/L^2;
@@ -149,12 +149,12 @@ classdef Part6 < handle
             w(2) = 0.652145154862546;
             w(3) = 0.347854845137454;
             w(4) = 0.347854845137454;
-            x = ((1-xiG)*coordx1+(1+xiG)*coordx2);
+            x = ((1-xiG)*coordx1+(1+xiG)*coordx2); %See demostration of this equation in the report
             qFun1 = (1-xiG).*x.^2;
             int1 = w*qFun1';
             qFun2 = (1+xiG).*x.^2;
             int2 = w*qFun2';
-            TermF = s*1/16*[int1;
+            TermF = s*1/16*[int1; %See demostration of this equation in the report
                 int2];
         end
         
