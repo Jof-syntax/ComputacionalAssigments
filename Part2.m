@@ -39,7 +39,7 @@ classdef Part2 < handle
             q = (rho*u(x)-s*x^2);
             Du = diff(u,x);
             uExact = dsolve(diff(u,2) == -q, u(0)== -g, Du(1)== b);
-            uExact = simplify(uExact);
+            uExact = vpa(uExact, 4);
         end
                 
         function createPlot(obj, time) % Creates the plot and its configuration
