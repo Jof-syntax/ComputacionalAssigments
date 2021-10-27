@@ -60,8 +60,8 @@ classdef main < handle
             part5.plot2(obj.time);
             part5.plot3(obj.time);
             part5.plot4(obj.time);
-            part6.plot(obj.time);
-            PART2.plot(obj.time);
+            part6.plot(obj.time, part2.displacement);
+           PART2.plot(obj.time);
         end
         
     end
