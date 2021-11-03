@@ -21,11 +21,12 @@ for e = 1:1:nElem % For each element:
     d1 = d_k(e);
     d2 = d_k(e+1);
     de =  [d1; d2];
+    
     strain = Be*de; % By definition 
     Ee = DerStressFUN(strain); % 'E' of the element
     
     Ke = 0;
-    for i = 1:1:length(w) %Gauss integration (3 points)
+    for i = 1:1:length(w) % Gauss integration (3 points)
         N1 = (1-xiG(i))/2;
         N2 = (1+xiG(i))/2;
         x = N1*COOR_e( 1 )+N2*COOR_e( 2 );
