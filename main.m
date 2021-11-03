@@ -28,6 +28,10 @@ classdef main < handle
             
             %%%%%%%%%%%%%%%%%%%% Plots %%%%%%%%%%%%%%%%%%%%
             obj.createPlot(part2, part5, part6, PART2);
+            
+            %%%%%%%%%%%%%% Advanced Assigment %%%%%%%%%%%%%
+            ProgramNonlinear();
+          
         end
     end
     
