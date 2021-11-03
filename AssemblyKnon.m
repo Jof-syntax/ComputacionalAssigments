@@ -1,4 +1,3 @@
-
 function K = AssemblyKnon(COOR,CN,d_k,AreaFUN,DerStressFUN)
 
 nElem = size(CN, 1 );
@@ -14,6 +13,7 @@ for e = 1:1:nElem % For each element:
     % Obtain the coordinates, of the element
     NODOSe = CN( e , : );
     COOR_e = COOR(NODOSe );
+    
     he = COOR_e( 2 ) - COOR_e( 1 );  % He defined between two coordinates
     Be = 1/he*[-1 1];     % Be definition
     
@@ -30,7 +30,7 @@ for e = 1:1:nElem % For each element:
         N2 = (1+xiG(i))/2;
         x = N1*COOR_e( 1 )+N2*COOR_e( 2 );
         areaE = AreaFUN(x); % Area of the element
-        f = Be'.*(areaE*Ee)*Be; %See demostration of this equation in the report
+        f = Be'.*(areaE*Ee)*Be; % See demostration of this equation in the report
         Ke = Ke + w(i)*f*he/2; % K for the element 'e'
     end
     
