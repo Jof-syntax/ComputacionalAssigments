@@ -36,48 +36,27 @@ classdef AssigmentPART2 < handle
         function Error = computeError(obj) %computes the error for 'U' and 'dU' in a matrix of Error
             nElems = obj.nElems;
             a = length(nElems);
-            Error = zeros(a-1, 2); % Matrix of errors
-            for i = 1:1:a-1
+            Error = zeros(a, 2); % Matrix of errors
+            for i = 1:1:a
                 [Error(i, 1) Error(i, 2)]  = obj.computeErrorUdU(i);
             end
         end
         
         function [ErrorU ErrorDU] = computeErrorUdU(obj, currentNelem) % computes the error for 'U' and 'DU'
             nElems = obj.nElems;
-            l = length(nElems);
             coordApprox = obj.displacements(currentNelem).COOR;
-            coordExact = obj.displacements(l).COOR;
             dApprox = obj.displacements(currentNelem).displacement;
-            dExact = obj.displacements(l).displacement;
             ErrorU = 0;
             ErrorDU = 0;
-            for i = 1:1:length(nElems(currentNelem)) % for each element of the beam:
+            for i = 1:1:nElems(currentNelem) % for each element of the beam:
                 coordx1 = coordApprox(i);
                 coordx2 = coordApprox(i+1);
-                found = 0;
-                k = 1;
-                while found == 0 %finds the second coordinate of the exact solution that is equivalent to the approximated solution
-                    if coordx2 == coordExact(k)
-                        found = 1;
-                    else
-                        k = k+1;
-                    end
-                end
-                j = 1;
-                found = 0;
-                while found == 0 %finds the first coordinate of the exact solution that is equivalent to the approximated solution
-                    if coordx1 == coordExact(j)
-                        found = 1;
-                    else
-                        j = j+1;
-                    end
-                end
-                displacementN1 = dApprox(i);
+               
+                displacementN1 = dApprox(i); %Displacement for approx solution
                 displacementN2 = dApprox(i+1);
-                displacementN1Exact = dExact(j);
-                displacementN2Exact = dExact(k);
-                ErrorU = ErrorU + obj.GaussQuadratureU(displacementN1, displacementN2, displacementN1Exact, displacementN2Exact,  coordx1, coordx2);
-                ErrorDU = ErrorDU + obj.GaussQuadratureDU(displacementN1, displacementN2, displacementN1Exact, displacementN2Exact,  coordx1, coordx2);
+                
+                ErrorU = ErrorU + obj.GaussQuadratureU(displacementN1, displacementN2,  coordx1, coordx2);
+                ErrorDU = ErrorDU + obj.GaussQuadratureDU(displacementN1, displacementN2,  coordx1, coordx2);
             end
             %See demostration of these equations in the report in order to understand the process
             ErrorU = sqrt(ErrorU);
@@ -87,9 +66,8 @@ classdef AssigmentPART2 < handle
         function sizeElement = computeSizeElement(obj) %computes the size of the elements for each number of element
             nElems = obj.nElems;
             a = length(nElems);
-            nElems = nElems(1:a-1);
-            sizeElement = zeros(a-1, 1);
-            for i = 1:1:a-1
+            sizeElement = zeros(a, 1);
+            for i = 1:1:a
                 sizeElement(i) = 1/nElems(i); % 1 is the length of the beam
             end
         end
@@ -113,26 +91,48 @@ classdef AssigmentPART2 < handle
     methods (Access = private, Static)
         
         function nElems = computeNElems() % computes the number of elements that will be used
-            nElems = [8 16 32 64 128 256 512 32768]; %last element is considered as exact solution
+            nElems = [8 16 32 64 128 256 512];
         end
         
-        function Error = GaussQuadratureU(displacement1, displacement2, displacement1Exact, displacement2Exact,  coordx1, coordx2) %Computes the error using the GaussQuadrature for U
-            xiG(1) = sqrt(3/5);
-            xiG(2) = -sqrt(3/5);
-            xiG(3) = 0;
-            w(1) = 5/9;
-            w(2) = 5/9;
-            w(3) = 8/9;
-            qFun1 = ((1-xiG)*(displacement1Exact - displacement1) + (1+xiG)*(displacement2Exact - displacement2)).^2; %See demostration of this equation in the report
-            int = w*qFun1';
+        function Error = GaussQuadratureU(displacement1, displacement2, coordx1, coordx2) %Computes the error using the GaussQuadrature for U
+            xiG(1) = 0.339981043584856;
+            xiG(2) = -0.339981043584856;
+            xiG(3) = 0.861136311594053;
+            xiG(4) = -0.861136311594053;
+            w(1) = 0.652145154862546;
+            w(2) = 0.652145154862546;
+            w(3) = 0.347854845137454;
+            w(4) = 0.347854845137454;
             he = coordx2 - coordx1;
-            Error = 1/8*he*int;
+            uExactFunction = @(x) 0.01*cos(pi*x) + pi/100*sin(pi*x)+0.098696*x^2-0.02;
+            Error = 0;
+            for i = 1:length(w)
+                N = 1/2*[1-xiG(i) 1+xiG(i)];
+                UExact = uExactFunction(N*[coordx1; coordx2]);
+                qFun1 = (UExact - 1/2*((1-xiG(i))*displacement1 + (1+xiG(i))*displacement2))^2; %See demostration of this equation in the report
+                Error = Error + w(i)*qFun1;
+            end
+            Error = he/2*Error;
         end
         
-        function Error = GaussQuadratureDU(displacement1, displacement2, displacement1Exact, displacement2Exact,  coordx1, coordx2) %Computes the error using the GaussQuadrature for dU
-            qFun1 = ((-displacement1Exact + displacement2Exact) - (-displacement1 + displacement2))^2;  %See demostration of this equation in the report
+        function Error = GaussQuadratureDU(displacement1, displacement2,  coordx1, coordx2) %Computes the error using the GaussQuadrature for dU
+            xiG(1) = 0.339981043584856;
+            xiG(2) = -0.339981043584856;
+            xiG(3) = 0.861136311594053;
+            xiG(4) = -0.861136311594053;
+            w(1) = 0.652145154862546;
+            w(2) = 0.652145154862546;
+            w(3) = 0.347854845137454;
+            w(4) = 0.347854845137454;
+            DuExactFunction = @(x) 0.19739*x+0.098696*cos(pi*x)-pi/100*sin(pi*x);
             he = coordx2 - coordx1;
-            Error = 1/he*qFun1;
+            Error = 0;
+            for i = 1:length(w)
+                N = 1/2*[1-xiG(i) 1+xiG(i)];
+                DUExact = DuExactFunction(N*[coordx1; coordx2]);
+                qFun1 = (DUExact + (displacement1 - displacement2)/he)^2;  %See demostration of this equation in the report
+                Error = Error + he/2*qFun1*w(i);
+            end
         end
         
     end
