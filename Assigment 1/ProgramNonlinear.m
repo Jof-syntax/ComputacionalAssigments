@@ -1,6 +1,7 @@
 function ProgramNonlinear()
 clc
 clear all
+close all
 format long g
 % Template for assignment 1, advanced part
 % ----------------------------------------------

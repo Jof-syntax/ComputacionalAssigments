@@ -103,17 +103,17 @@ classdef Part5 < handle
             figure;
             hold on;
             uExact = obj.uExact;
-            xlabel('x(x) [m]') ;
-            ylabel('u(x) [m]');
             h1 = ezplot(uExact, 0, 1);
             h2 = ezplot(approxSol, [0,1]);
             legend([h1 h2],{['Exact: ',char(vpa(uExact,3))],['Polynomial basis: ',char(vpa(approxSol,3))]})
             title(' ');
+            xlabel('x(x) [m]') ;
+            ylabel('u(x) [m]');
             pause(time)
         end
         
     end
-   
+    
 end
 
 

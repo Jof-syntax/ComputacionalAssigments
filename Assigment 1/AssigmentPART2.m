@@ -104,7 +104,7 @@ classdef AssigmentPART2 < handle
             w(3) = 0.347854845137454;
             w(4) = 0.347854845137454;
             he = coordx2 - coordx1;
-            uExactFunction = @(x) 0.01*cos(pi*x) + pi/100*sin(pi*x)+0.098696*x^2-0.02;
+            uExactFunction = @(x) 0.01*cos(pi*x) + pi/100*sin(pi*x)+0.098696*x^2-0.02; %Exact solution
             Error = 0;
             for i = 1:length(w)
                 N = 1/2*[1-xiG(i) 1+xiG(i)];
@@ -124,7 +124,7 @@ classdef AssigmentPART2 < handle
             w(2) = 0.652145154862546;
             w(3) = 0.347854845137454;
             w(4) = 0.347854845137454;
-            DuExactFunction = @(x) 0.19739*x+0.098696*cos(pi*x)-pi/100*sin(pi*x);
+            DuExactFunction = @(x) 0.19739*x+0.098696*cos(pi*x)-pi/100*sin(pi*x); % Exact solution '
             he = coordx2 - coordx1;
             Error = 0;
             for i = 1:length(w)

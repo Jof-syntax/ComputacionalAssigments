@@ -35,7 +35,7 @@ for  e = 1:1:nElem % For each element:
         x = N1*COOR_e( 1 )+N2*COOR_e( 2 );
         areaE = AreaFUN(x); % Area of the element
         
-        f = he/2*Be*areaE*STRESS(e); % See demostration of this equation in the report
+        f = he/2*Be*areaE*STRESS(e);  % Equation 141 from "J. A. Hernandez. FINITE ELEMENT METHOD (1D) (pp 69)."
         Fi = Fi + w(i)*f; % Internal forces for element 'e'
     end
     

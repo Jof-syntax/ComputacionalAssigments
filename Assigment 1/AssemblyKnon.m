@@ -31,7 +31,7 @@ for e = 1:1:nElem % For each element:
         N2 = (1+xiG(i))/2;
         x = N1*COOR_e( 1 )+N2*COOR_e( 2 );
         areaE = AreaFUN(x); % Area of the element
-        f = Be'.*(areaE*Ee)*Be; % See demostration of this equation in the report
+        f = Be'.*(areaE*Ee)*Be; % Equation 156 from "J. A. Hernandez. FINITE ELEMENT METHOD (1D) (pp 73)."
         Ke = Ke + w(i)*f*he/2; % K for the element 'e'
     end
     
