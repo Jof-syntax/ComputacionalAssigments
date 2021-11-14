@@ -13,13 +13,11 @@ function K = ComputeK(COOR,CN,TypeElement, ConductMglo)
 % -----------
 %  ConductMglo (ndim x ndim x nelem)  % Array of conductivity matrices
 %%%%
- if nargin == 0
-     load('tmp1.mat')
- end
- 
- 
- 
- 
+if nargin == 0
+    load('tmp1.mat')
+end
+
+
 %% COMPLETE THE CODE ....
 %warning('You must program the assembly of the conductance matrix K !!')
 
@@ -27,22 +25,28 @@ function K = ComputeK(COOR,CN,TypeElement, ConductMglo)
 % Dimensions of the problem
 nnode = size(COOR,1);  % Number of nodes
 ndim = size(COOR,2);   % Spatial Dimension of the problem  (2 or 3)
-nelem = size(CN,1);   % Number of elements 
-nnodeE = size(CN,2) ; %Number of nodes per element 
+nelem = size(CN,1);   % Number of elements
+nnodeE = size(CN,2) ; %Number of nodes per element
 
-% Determine Gauss weights, shape functions and derivatives  
-TypeIntegrand = 'K'; 
-[weig,posgp,shapef,dershapef] = ComputeElementShapeFun(TypeElement,nnodeE,TypeIntegrand) ; 
+% Determine Gauss weights, shape functions and derivatives
+TypeIntegrand = 'K';
+[weig,posgp,shapef,dershapef] = ComputeElementShapeFun(TypeElement,nnodeE,TypeIntegrand) ;
 
 % Assembly of matrix K
 % ----------------
-K = sparse(nnode,nnode) ;
-% ......
- for e = 1:nelem 
-   % ......
-
-
-
-
- end
+K = sparse(nnode,nnode);
+for e = 1:nelem
+    ConductM = ConductMglo(:, :, e);
+    cNe = CN(e, :);
+    Xe = COOR(cNe, :);
+    Ke = ComputeKeMatrix(ConductM,weig,dershapef,Xe);
+    for a = 1:1:nnodeE % Assembly of the K matrix for the element 'e'
+        for b = 1:1:nnodeE
+            A = CN(e,a);
+            B = CN(e,b);
+            K(A,B) = K(A,B) + Ke(a,b);
+        end
+    end 
+end
+end
 
