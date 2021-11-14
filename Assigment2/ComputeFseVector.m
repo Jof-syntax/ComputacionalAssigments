@@ -1,4 +1,4 @@
-function Fse = ComputeFseVector(fe,weig,shapef,dershapef,Xe) ; 
+function Fse = ComputeFseVector(fe,weig,shapef,dershapef,Xe)
 % Given 
 % fe: Nodal values of the source function (nnodeE x1)
 % weig :   Vector of Gauss weights (1xngaus)
@@ -23,4 +23,5 @@ for  g = 1:ngaus
     detJe = det(Je) ;    
     %
     Fse = Fse + weig(g)*detJe*(Ne'*Ne)*fe ; 
+end
 end
