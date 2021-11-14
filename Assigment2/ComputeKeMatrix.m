@@ -1,4 +1,4 @@
-function Ke = ComputeKeMatrix(ConductM,weig,dershapef,Xe) ;
+function Ke = ComputeKeMatrix(ConductM,weig,dershapef,Xe)
 % Given 
 % ConductM: Conductivity Matrix
 % weig :   Vector of Gauss weights (1xngaus)

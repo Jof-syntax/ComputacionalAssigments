@@ -1,4 +1,4 @@
-function [weig,posgp,shapef,dershapef] = ComputeElementShapeFun(TypeElement,nnodeE,TypeIntegrand) ;
+function [weig,posgp,shapef,dershapef] = ComputeElementShapeFun(TypeElement,nnodeE,TypeIntegrand)
 % This function returns, for each "TypeElement" and 'TypeIntegrand'
 % (K/RHS)*
 % weig = Vector of Gauss weights (1xngaus)
@@ -26,7 +26,7 @@ switch TypeElement
     case 'Quadrilateral'
         if nnodeE ==4
            % warning('Implement function Quadrilateral4NInPoints')
-            [weig,posgp,shapef,dershapef] = Quadrilateral4NInPoints ;
+            [weig,posgp,shapef,dershapef] = Quadrilateral4NInPoints() ;
         else
             error('Option not implemented')
         end
