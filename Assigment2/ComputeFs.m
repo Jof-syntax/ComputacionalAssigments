@@ -32,7 +32,7 @@ for e = 1:1:nelem
     Fse = ComputeFseVector(fe , weig , shapef , dershapef , Xe);
     for a = 1:nnodeE % Assembly of the Fint matrix for the element 'e'
         A = CN(e,a);
-        Fs(A) = Fs(A)+Fi(a);
+        Fs(A) = Fs(A)+Fse(a);
     end
 end
 end
