@@ -29,16 +29,16 @@ Krr = K(DOFr,DOFr);
 
 Fl = F(DOFl,1);
 dL =  Kll\(Fl-Klr*dR); 
-Fr = Krr*dR+Krl*dL;
+Fr = Krr*dR+Krl*dL; %Fext_r?
  
 d = zeros(nnode*ndim,1) ; % Nodal displacements (initialization)
 d(DOFl)= dL ; 
 d(DOFr) = dR ;
 React = zeros(size(d)) ;  %  Reaction forces  (initialization)
 React(DOFl) = Fl;
-React(DOFr) = Fr;
 
-%%%% Computation of strain and stress vector at each gauss point
+
+%%%% COmputation of strain and stress vector at each gauss point
 disp('Computation of stress and strains at each Gauss point')
 [strainGLO, stressGLO, posgp]= StressStrains(COOR,CN,TypeElement,celasglo,d,typePROBLEM,celasgloINV,DATA) ;
 
