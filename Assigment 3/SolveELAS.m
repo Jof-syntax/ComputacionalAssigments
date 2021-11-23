@@ -13,7 +13,10 @@ function [d strainGLO stressGLO  React posgp] = SolveELAS(K,Fb,Ftrac,dR,DOFr,COO
 if nargin == 0
     load('tmp.mat')
 end
-nnode = size(COOR,1); ndim = size(COOR,2); nelem = size(CN,1); nnodeE = size(CN,2) ;     %
+nnode = size(COOR,1); 
+ndim = size(COOR,2); 
+nelem = size(CN,1); 
+nnodeE = size(CN,2) ;     
 % Solution of the system of FE equation
 % Right-hand side
 F = Fb + Ftrac ;
@@ -21,22 +24,22 @@ F = Fb + Ftrac ;
 DOFl = 1:nnode*ndim ;
 DOFl(DOFr) = [] ;
 
-%error('You should implement the solution of the system of equations, as well as the computation of nodal reaction forces')
+% K Splitter
 Klr = K(DOFl,DOFr);
 Kll = K(DOFl,DOFl);
 Krl = K(DOFr,DOFl);
 Krr = K(DOFr,DOFr);
 
-Fl = F(DOFl,1);
-dL =  Kll\(Fl-Klr*dR); 
-Fr = Krr*dR+Krl*dL;
- 
-d = zeros(nnode*ndim,1) ; % Nodal displacements (initialization)
+Fl = F(DOFl,1); 
+Fr = F(DOFr, 1);
+dL =  Kll\(Fl-Klr*dR); % Unkown displacements
+Rr = Krr*dR+Krl*dL-Fr; %Unkown reaction forces
+
+d = zeros(nnode*ndim,1) ; % Nodal displacements
 d(DOFl)= dL ; 
 d(DOFr) = dR ;
-React = zeros(size(d)) ;  %  Reaction forces  (initialization)
-React(DOFl) = Fl;
-React(DOFr) = Fr;
+React = zeros(size(d)) ;  %  Reaction forces
+React(DOFr) = Rr;
 
 %%%% Computation of strain and stress vector at each gauss point
 disp('Computation of stress and strains at each Gauss point')
