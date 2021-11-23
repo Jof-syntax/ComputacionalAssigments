@@ -1,0 +1,33 @@
+BeginZE C:/Users/pautu/Documents/Universitat/Curs 4/Q 7/Enginyeria aeroespacial computacional/pràctiques/pràctica 2/programa/gid_malla_1x1.gid/gid_malla_1x1.vv
+   x -3.34717130661010742 4.09654092788696289
+   y 2.1131589412689209 -1.05976009368896484
+   z -3.875 3.875
+   e 1.16666662693023682
+   v 0 0 0
+   r 1
+   m 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1
+   c 1 0.625 0
+   pd 0
+   pno 0
+   pfo 0
+   pf 4
+   pv 0
+   NowUse 1
+   DrawingType 0
+   LightVector 90 90 150 0
+   OGLShadow(UseShadows) 0
+   OGLShadow(RenderMode) RenderFast
+   OGLShadow(ShadowBias) 0
+   OGLShadow(AmbientShadows) 0
+   OGLShadow(UseFBO) 0
+   OGLShadow(FBOSize) 0
+   OGLShadow(DimmedLightFactor) 0
+   OGLStereo(UseStereo) 0
+   OGLStereo(RelativeEyeDistance) 1
+   OGLStereo(FlipEyes) 0
+   OGLStereo(StereoMode) AnaglyphColors
+   OGLStereo(EyeDistance) 0.075
+   OGLStereo(LeftEyeDistance) 1 0 0 1
+   OGLStereo(RightEyeDistance) 0 1 1 1
+EndZE C:/Users/pautu/Documents/Universitat/Curs 4/Q 7/Enginyeria aeroespacial computacional/pràctiques/pràctica 2/programa/gid_malla_1x1.gid/gid_malla_1x1.vv
+
