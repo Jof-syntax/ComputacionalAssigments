@@ -23,17 +23,15 @@ switch TypeElement
         end
     case 'Quadrilateral'
         if nnodeE ==4
-           %error('Implement function Quadrilateral4NInPoints  (you can use the one developed for heat conduction problems)')
-           [weig,posgp,shapef,dershapef] = Quadrilateral4NInPoints() ;
+           [weig,posgp,shapef,dershapef] = Quadrilateral4NInPoints ;
         else
-            warning('Option not implemented')
+            error('Option not implemented')
         end
     case 'Hexahedra'
-        if nnodeE ==8
-        %error('Implement function Hexahedra8NInPoints')
-        [weig,posgp,shapef,dershapef] = Hexahedra8NInPoints();
+       if nnodeE ==8
+        [weig,posgp,shapef,dershapef] = Hexahedra8NInPoints ;
         else
-            warning('Option not implemented')
+            error('Option not implemented')
         end
     otherwise
         error('Option not implemented')

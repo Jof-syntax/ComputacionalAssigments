@@ -66,9 +66,22 @@ iforce  = 1; % Number of force
 POINT_FORCE(iforce).NODE = 1;
 POINT_FORCE(iforce).VALUE = [0,0,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
 
+% %modificacio Pau
 % iforce  = 2; % Number of force
-% POINT_FORCE(iforce).NODE = 1;
-% POINT_FORCE(iforce).VALUE = [0,0,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
+% POINT_FORCE(iforce).NODE = 190;
+% POINT_FORCE(iforce).VALUE = [0,0,-0.2];    % Young's Modulus Units*(Length units)^2. In this case, MN
+% 
+% iforce  = 3; % Number of force
+% POINT_FORCE(iforce).NODE = 192;
+% POINT_FORCE(iforce).VALUE = [0,0.2,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
+% 
+% iforce  = 4; % Number of force
+% POINT_FORCE(iforce).NODE = 33;
+% POINT_FORCE(iforce).VALUE = [0,0,0.2];    % Young's Modulus Units*(Length units)^2. In this case, MN
+% 
+% iforce  = 5; % Number of force
+% POINT_FORCE(iforce).NODE = 31;
+% POINT_FORCE(iforce).VALUE = [0,-0.2,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
 
 % -------------------------
 %---5.3)  Body forces

@@ -58,7 +58,7 @@ Ftrac = FtracCOMP(COOR,CNb,TypeElementB,Fpnt,Tnod);
 
 % D) Solving for the vector of unknown displacements 
 disp('Solving...')
-[d strainGLO stressGLO  React posgp] = SolveELAS(K,Fb,Ftrac,dR,DOFr,COOR,CN,TypeElement,celasglo,typePROBLEM,celasgloINV,DATA) ; 
+[d,strainGLO,stressGLO,React,posgp] = SolveELAS(K,Fb,Ftrac,dR,DOFr,COOR,CN,TypeElement,celasglo,typePROBLEM,celasgloINV,DATA) ; 
 
 
 

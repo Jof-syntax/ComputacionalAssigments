@@ -6,11 +6,11 @@ function K = ComputeK(COOR,CN,TypeElement, celasglo) ;
 if nargin == 0
     load('tmp1.mat')
 end
-nnode = size(COOR,1); ndim = size(COOR,2); nelem = size(CN,1); nnodeE = size(CN,2) ;
+nnode = size(COOR,1); ndim = size(COOR,2); nelem = size(CN,1); nnodeE = size(CN,2) ;  
 nstrain = size(celasglo,1) ;
 % Shape function routines (for calculating shape functions and derivatives)
 TypeIntegrand = 'K';
-[weig, posgp, shapef,dershapef] = ComputeElementShapeFun(TypeElement,nnodeE,TypeIntegrand) ;
+[weig,posgp,shapef,dershapef] = ComputeElementShapeFun(TypeElement,nnodeE,TypeIntegrand) ;
 % Assembly of matrix K
 % ----------------
 K = sparse([],[],[],nnode*ndim,nnode*ndim,nnodeE*ndim*nelem) ;
@@ -26,9 +26,13 @@ for e = 1:nelem
         for bnod = 1:1:nnodeE
             b = Nod2DOF(bnod,ndim) ;
             Bnod = CN(e,bnod) ; B = Nod2DOF(Bnod,ndim) ;
+            
             K(A,B) = K(A,B) + Ke(a,b);
         end
     end
+   
+    
+  
     
     if mod(e,10)==0  % To display on the screen the number of element being assembled
         disp(['e=',num2str(e)])

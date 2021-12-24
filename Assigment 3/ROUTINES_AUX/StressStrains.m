@@ -1,5 +1,4 @@
-function [strainGLO stressGLO posgp  ]= StressStrains(COOR,CN,TypeElement,celasglo,...
-    d,typePROBLEM,celasgloINV,DATA)
+function [strainGLO,stressGLO,posgp]= StressStrains(COOR,CN,TypeElement,celasglo,d,typePROBLEM,celasgloINV,DATA)
 %%%% COmputation of strain and stresses   at each gauss point
 %dbstop('4')
 if nargin == 0
