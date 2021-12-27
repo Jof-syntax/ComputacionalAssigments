@@ -1,3 +1,5 @@
+
+
 % --------------------------------------
 % % 1. NAME OF THE MESH AND DATA FILES. COORDINATES, CONNECTIVITIES,  LISTS
 % % OF NODES FOR IMPOSING BOUNDARY CONDITIONS
@@ -92,6 +94,8 @@ dens0 = 2700;   % kg/m^3
 
 %
 DATA.PRINT_AVERAGE_STRESSES_ON_ELEMENTS = 0  ; % Print volumetric average of stresses at each element
+
+
 
 
 % PROCESSING INPUT DATA

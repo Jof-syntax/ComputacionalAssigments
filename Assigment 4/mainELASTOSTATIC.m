@@ -12,16 +12,15 @@ end
  
 %%% INPUT  %%% 
 % Input data file %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 NAME_INPUT_DATA = 'BEAM3D' ;  % Name of the mesh file 
 %------------------------------------------------------
-
+BEAM3D;
 % PREPROCESS  
 [COOR,CN,TypeElement,TypeElementB, celasglo,DOFr,dR,Tnod,CNb,fNOD,Fpnt,NameFileMesh,typePROBLEM,celasgloINV,DATA] = ReadInputDataFile(NAME_INPUT_DATA)  ; 
 
 % SOLVER 
 % --------------------------------------------
-[d,strainGLO,stressGLO,React,posgp]= SolveElastFE(COOR,CN,TypeElement,TypeElementB, celasglo,  DOFr,dR,Tnod,CNb,fNOD,Fpnt,typePROBLEM,celasgloINV,DATA)  ; 
+[d, strainGLO, stressGLO,  React, posgp] = SolveElastFE(COOR,CN,TypeElement,TypeElementB, celasglo,  DOFr,dR, Tnod,CNb,fNOD,Fpnt,typePROBLEM,celasgloINV,DATA, densglo);
 
 % POSTPROCESS
 % --------------------------------------------

@@ -123,7 +123,7 @@ end
 fNOD = fBODY*ones(nnode*ndim,1) ; 
 
 % 6. Density 
-densglo = dens0*ones(nelem,1);  % in kKg/m^3 
+densglo = dens0*ones(nelem,1);  % in Kg/m^3 
 
 
 % 

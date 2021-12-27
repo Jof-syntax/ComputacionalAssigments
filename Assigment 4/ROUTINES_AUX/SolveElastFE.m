@@ -1,5 +1,5 @@
 function[d strainGLO stressGLO  React posgp]  = SolveElastFE(COOR,CN,TypeElement,TypeElementB, celasglo,  DOFr,dR,...  
-    Tnod,CNb,fNOD,Fpnt,typePROBLEM,celasgloINV,DATA) ; 
+    Tnod,CNb,fNOD,Fpnt,typePROBLEM,celasgloINV,DATA,  density) ; 
 
 %%% This function returns the (nnode*ndim x 1) vector of nodal displacements (d),
 %%% as well as the arrays containing  the stresses (stressGLO) and strains (strainGLO) at all gauss
@@ -44,7 +44,10 @@ d=[]; strainGLO=[] ; stressGLO=[] ;posgp=[] ;
 % A) Global stiffness matrix 
 % ------------------------------
 disp('Computing stiffness matrix K ...')
-K = ComputeK(COOR,CN,TypeElement, celasglo) ; 
+K = ComputeK(COOR,CN,TypeElement, celasglo); 
+
+disp('Computing stiffness matrix M ...')
+M = ComputeM(COOR,CN,TypeElement, density); 
 
 % B) External force vector due to body forces
 % ------------------------------
@@ -59,8 +62,5 @@ Ftrac = FtracCOMP(COOR,CNb,TypeElementB,Fpnt,Tnod);
 % D) Solving for the vector of unknown displacements 
 disp('Solving...')
 [d,strainGLO,stressGLO,React,posgp] = SolveELAS(K,Fb,Ftrac,dR,DOFr,COOR,CN,TypeElement,celasglo,typePROBLEM,celasgloINV,DATA) ; 
-
-
-
 
 save('INFO_FE.mat','React','COOR','DOFr')
