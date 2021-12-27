@@ -17,6 +17,5 @@ for  g = 1:ngaus
     Je = Xe*BeXi' ; 
     % JAcobian 
     detJe = det(Je) ;    
-    %
     Me = Me + weig(g)*(detJe*Ne'*den*Ne) ; 
 end

@@ -2,6 +2,7 @@ clc
 clear
 load('INFO_FE.mat');
 load('dataP4.mat');
+
 neig = 25;
 
 nnode = size(COOR,1); 
@@ -14,6 +15,4 @@ Kll = K(DOFl,DOFl);
 
 [MODES, FREQ] = UndampedFREQ(Mll,Kll,neig);
 
-NameFileMesh = 'MyFirstMesh3D.msh';
-GidPostProcessModes(COOR,CN,TypeElement,MODES,posgp,NameFileMesh,DATA,DOFl);
-
+GidPostProcessModes(COOR,CN,TypeElement,MODES,posgp,NameFileMesh,DATA,DOFl); 
