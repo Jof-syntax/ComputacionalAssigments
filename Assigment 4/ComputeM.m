@@ -17,7 +17,7 @@ for e = 1:nelem
     den = density(e) ;  % Density matrix of element "e"
     CNloc = CN(e,:) ;   % Coordinates of the nodes of element "e"
     Xe = COOR(CNloc,:)' ;     % Computation of elemental stiffness matrix
-    Me = ComputeMeMatrix(den,weig,dershapef,Xe) ;
+    Me = ComputeMeMatrix(den,weig,dershapef,Xe, shapef) ;
     
     for anod = 1:1:nnodeE
         a = Nod2DOF(anod,ndim) ;
