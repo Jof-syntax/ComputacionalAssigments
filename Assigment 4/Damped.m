@@ -3,7 +3,7 @@ clear
 load('INFO_FE.mat');
 load('dataP4.mat');
 
-neig = 21;
+neig = 25;
 time = 105.23; % 1/0.3801*40
 timeStep = 500;
 dampingRatio = 0.01;
@@ -17,32 +17,29 @@ Mll = M(DOFl,DOFl);
 Kll = K(DOFl,DOFl);
 dll = d(DOFl);
 [MODES, FREQ] = UndampedFREQ(Mll,Kll,neig);
-e = 2.71;
+ee = 2.71;
 
-displacement = zeros(size(MODES, 1), timeStep); %displacement en cada node, time quan passa 
+displacement = zeros(size(MODES, 1), timeStep); %displacement en cada node, time quan passa
 t = 0;
 cont = 1;
-Amplitud = zeros(neig, size(MODES, 1));
+Amplitud = zeros(neig, 1);
 for j = 1:1:timeStep
     dTime = 0;
-    for iMode = 1:1:neig
-        wi = 2*pi*FREQ(iMode)*sqrt(1-dampingRatio^2);
-        qo = MODES(:,iMode)'*Mll*dll;
-        newDTime = (MODES(iMode)*(e^(-dampingRatio*2*pi*FREQ(iMode)*t)*(qo*cos(wi*t)+sin(wi*t)*(dampingRatio*qo)/sqrt(1-dampingRatio^2))))';
-        
-
-        if j == 1
-            Amplitud(iMode, cont) = MODES(:,iMode)'*Mll*newDTime; % 
-            cont = cont +1;
+        for iMode = 1:1:neig
+            wi = FREQ(iMode)*sqrt(1-dampingRatio^2);
+            qo = MODES(:,iMode)'*Mll*dll;
+            q = ee^(-dampingRatio*FREQ(iMode)*t)*(qo*cos(wi*t)+sin(wi*t)*(dampingRatio*qo)/sqrt(1-dampingRatio^2));
+            phy = MODES(:, iMode);
+            dis = phy*q;
+            dTime = dTime + dis;
+            if j == 1
+                Amplitud(iMode) = abs(qo); %calcula l'amplitud
+            end
         end
-        
-
-        dTime = dTime + newDTime;
-    end
-    displacement(:, j) = dTime; 
+    displacement(:, j) = dTime; % obtain eq 95
     t = t + time/timeStep;
 end
 
-plot(FREQ, Amplitud(: , 2))
-
-
+bar(Amplitud(:))
+xlabel('Modes')
+ylabel('Amplitude')

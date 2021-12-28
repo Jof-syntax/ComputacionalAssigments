@@ -13,6 +13,6 @@ DOFl(DOFr) = [] ;
 Mll = M(DOFl,DOFl);
 Kll = K(DOFl,DOFl);
 
-[MODES, FREQ] = UndampedFREQ(Mll,Kll,neig);
+[MODES, FREQ] = UndampedFREQ(Mll,Kll,neig); % FREQ is w
 
 GidPostProcessModes(COOR,CN,TypeElement,MODES,posgp,NameFileMesh,DATA,DOFl); 

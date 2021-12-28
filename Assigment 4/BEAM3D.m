@@ -53,7 +53,7 @@ DIRICHLET(icond).PRESCRIBED_DISP = {[0],[0],[0]} ;  % Constraints x,y and z dire
 % ------------------------------------------------------------------
 icond= 1 ;
 NEUMANN(icond).NUMBER_SURFACE = 2 ;  % Surface on which the load is applied
-NEUMANN(icond).FORCE_PER_UNIT_SURFACE= [0,-0.5,0] ; % Force per unit surface (units determined by
+NEUMANN(icond).FORCE_PER_UNIT_SURFACE= [0,0,0] ; % Force per unit surface (units determined by
 % the units of the  Young's Modulus, and the units of length employed in GID). In this case, 500 KN/m2
 % = 0.5 MPa
 
