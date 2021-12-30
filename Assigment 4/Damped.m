@@ -22,13 +22,13 @@ dll = d(DOFl);
 time = 40*2*pi/FREQ(1); % Computes the maximum time as 40 time the period
 ee = 2.71; % Mathematical constant
 
-DISP = zeros(size(MODES, 1), timeStep); % Generates the displacement matrix, where the rows will be the displacements and the columns each time.
+DISP = zeros(size(d,1), timeStep); % Generates the displacement matrix, where the rows will be the displacements and the columns each time.
 t = zeros(timeStep, 1); % Initial time 
-for j = 1:1:timeStep % Obtains the 't' matrix
+for j = 1:1:timeStep-1 % Obtains the 't' matrix
         t(j+1) = t(j) + time/timeStep;  
 end
 Amplitud = zeros(neig, 1); % Generates an amplitude matrix
-for j = 1:1:timeStep+1 % Obtains the 'DISP' matrix and compute the amplitude
+for j = 1:1:timeStep % Obtains the 'DISP' matrix and compute the amplitude
     dTime = 0;
         for iMode = 1:1:neig
             wi = FREQ(iMode)*sqrt(1-dampingRatio^2); % Natural 
@@ -41,11 +41,12 @@ for j = 1:1:timeStep+1 % Obtains the 'DISP' matrix and compute the amplitude
                 Amplitud(iMode) = abs(qo); % Computes the amplitude for t = 0.
             end
         end
-    DISP(:, j) = dTime; % Eq 95 of the theory pdf
+    DISP([1:5760], j) = dTime; % Eq 95 of the theory pdf
 end
 
-bar(Amplitud(:)) % Plot of the amplitud for each mode
-xlabel('Modes')
-ylabel('Amplitude')
 
-GidPostProcessDynamic( COOR, CN, TypeElement, DISP , 'dataP4.mat', posgp , 'MyFirstMesh3D.msh', t);
+ bar(Amplitud(:)) % Plot of the amplitud for each mode
+ xlabel('Modes')
+ ylabel('Amplitude')
+
+GidPostProcessDynamic( COOR, CN, TypeElement, DISP , 'dataP4.mat', posgp' , 'MyFirstMesh3D.msh', t);
