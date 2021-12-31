@@ -1,3 +1,5 @@
+% Inputs example assigment 3
+
 % --------------------------------------
 % % 1. NAME OF THE MESH AND DATA FILES. COORDINATES, CONNECTIVITIES,  LISTS
 % % OF NODES FOR IMPOSING BOUNDARY CONDITIONS
@@ -53,9 +55,11 @@ DIRICHLET(icond).PRESCRIBED_DISP = {[0],[0],[0]} ;  % Constraints x,y and z dire
 % ------------------------------------------------------------------
 icond= 1 ;
 NEUMANN(icond).NUMBER_SURFACE = 2 ;  % Surface on which the load is applied
-NEUMANN(icond).FORCE_PER_UNIT_SURFACE= [0,0,0] ; % Force per unit surface (units determined by
+NEUMANN(icond).FORCE_PER_UNIT_SURFACE= [0, -0.5,0] ; % Force per unit surface (units determined by
 % the units of the  Young's Modulus, and the units of length employed in GID). In this case, 500 KN/m2
 % = 0.5 MPa
+
+
 
 % % -------------------------------------------
 % % 5.2) POINT FORCES (FORCES APPLIED ON NODES)
@@ -64,22 +68,18 @@ iforce  = 1; % Number of force
 POINT_FORCE(iforce).NODE = 1;
 POINT_FORCE(iforce).VALUE = [0,0,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
 
-% %modificacio Pau
+
+
+% % % %modificacio (NOVA)
+% % % 
 % iforce  = 2; % Number of force
-% POINT_FORCE(iforce).NODE = 190;
-% POINT_FORCE(iforce).VALUE = [0,0,-0.2];    % Young's Modulus Units*(Length units)^2. In this case, MN
+% POINT_FORCE(iforce).NODE = 31;
+% POINT_FORCE(iforce).VALUE = [0,-0.4,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
 % 
 % iforce  = 3; % Number of force
 % POINT_FORCE(iforce).NODE = 192;
-% POINT_FORCE(iforce).VALUE = [0,0.2,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
-% 
-% iforce  = 4; % Number of force
-% POINT_FORCE(iforce).NODE = 33;
-% POINT_FORCE(iforce).VALUE = [0,0,0.2];    % Young's Modulus Units*(Length units)^2. In this case, MN
-% 
-% iforce  = 5; % Number of force
-% POINT_FORCE(iforce).NODE = 31;
-% POINT_FORCE(iforce).VALUE = [0,-0.2,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
+% POINT_FORCE(iforce).VALUE = [0,0.4,0];    % Young's Modulus Units*(Length units)^2. In this case, MN
+
 
 % -------------------------
 %---5.3)  Body forces
@@ -88,10 +88,12 @@ fBODY = 0 ;  % Constant value per unit volum MN/m^3.
 
 
 % DENSITY (THIS IS FOR ASSIGNMENT 4)
-dens0 = 2700;   % kg/m^3
+dens0 = 2700e-6;   % Mkg/m^3
 
 %
 DATA.PRINT_AVERAGE_STRESSES_ON_ELEMENTS = 0  ; % Print volumetric average of stresses at each element
+
+
 
 
 % PROCESSING INPUT DATA
